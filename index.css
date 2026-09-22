@@ -181,7 +181,7 @@ body::before {
     height: 100%;
     background:
         linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.68)),
-        url('image/aryan imagep.jpg');
+        url('image/portimage.jpeg');
     background-size: cover;
     background-position: center calc(50% + var(--bg-shift, 0px));
     background-repeat: no-repeat;
@@ -1056,7 +1056,7 @@ footer {
     body::before {
         background:
             linear-gradient(rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.82)),
-            url('image/aryan imagep.jpg');
+            url('image/portimage.jpeg');
         background-size: cover;
         background-position: center;
     }

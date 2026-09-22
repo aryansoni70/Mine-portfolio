@@ -81,9 +81,48 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initContactForm();
     initTypingEffect();
+    fetchGitHubProjects();
 
     // Re-render lucide icons after dynamic changes
     if (window.lucide) {
         lucide.createIcons();
     }
 });
+
+// Fetch GitHub Projects
+async function fetchGitHubProjects() {
+    const grid = document.getElementById('github-projects-grid');
+    const status = document.getElementById('github-projects-status');
+    
+    if (!grid || !status) return;
+
+    try {
+        status.textContent = 'Loading projects...';
+        const response = await fetch('https://api.github.com/users/aryansoni70/repos?sort=updated&per_page=6');
+        if (!response.ok) throw new Error('Failed to fetch');
+        
+        const repos = await response.json();
+        
+        grid.innerHTML = '';
+        repos.forEach(repo => {
+            const card = document.createElement('div');
+            card.className = 'project-card reveal active';
+            
+            card.innerHTML = `
+                <div class="project-info">
+                    <h3>${repo.name}</h3>
+                    <p>${repo.description || 'No description available.'}</p>
+                    <div style="margin-top: 15px;">
+                        <a href="${repo.html_url}" target="_blank" class="btn secondary"
+                            style="padding: 8px 15px; font-size: 0.9em; text-decoration: none;">View on GitHub</a>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+        status.textContent = '';
+    } catch (error) {
+        console.error('Error fetching GitHub projects:', error);
+        status.textContent = 'Failed to load GitHub projects.';
+    }
+}
